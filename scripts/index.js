@@ -20,4 +20,12 @@ const virtualDOM = (
 
 const Fnc = ({ title }) => <div>{title} Functional Component</div>
 
-TinyReact.render(<Fnc title="Best" />, app)
+class ClassComponent extends TinyReact.Component {
+  render() {
+    return <div>Hello React</div>
+  }
+}
+
+// TinyReact.render(<Fnc title="Best" />, app)
+
+TinyReact.render(<ClassComponent />, app)
