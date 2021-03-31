@@ -18,4 +18,6 @@ const virtualDOM = (
   </div>
 )
 
-TinyReact.render(virtualDOM, app)
+const Fnc = () => <div>Functional Component</div>
+
+TinyReact.render(<Fnc />, app)
