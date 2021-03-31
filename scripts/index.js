@@ -18,6 +18,6 @@ const virtualDOM = (
   </div>
 )
 
-const Fnc = () => <div>Functional Component</div>
+const Fnc = ({ title }) => <div>{title} Functional Component</div>
 
-TinyReact.render(<Fnc />, app)
+TinyReact.render(<Fnc title="Best" />, app)

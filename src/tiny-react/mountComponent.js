@@ -23,5 +23,6 @@ export default function mountComponent(component, container) {
 }
 
 function buildFunctionComponent(component) {
-  return component.type()
+  // 函数组件声明时其接受的参数为 props
+  return component.type(component.props || {})
 }
