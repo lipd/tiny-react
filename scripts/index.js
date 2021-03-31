@@ -5,7 +5,7 @@ const app = document.getElementById('app')
 const virtualDOM = (
   <div className="container">
     <h1>Hello Tiny React</h1>
-    <div>
+    <div className="has-class">
       嵌套1 <div>嵌套 1.1</div>
     </div>
     <h3>(观察: 这个将会被改变)</h3>
