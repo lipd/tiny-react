@@ -1,10 +1,27 @@
+import isComponent from './isComponent'
 import isFunctionComponent from './isFunctionComponent'
+import mountNativeElement from './mountNativeElement'
 
-export default function mountComponent(virtualDOM, container) {
-  if (isFunctionComponent(virtualDOM)) {
-    // mount funciton component
-    console.log('is function component')
+export default function mountComponent(component, container) {
+  let virtualDOM = null
+
+  // 生成 VDOM
+  if (isFunctionComponent(component)) {
+    // generate funciton component
+    virtualDOM = buildFunctionComponent(component)
   } else {
-    // mount class component
+    // generate class component
   }
+
+  // 挂载 VDOM
+  if (isComponent(virtualDOM)) {
+    // 如果还是生成的还是组件则向上递归
+    mountComponent(virtualDOM, container)
+  } else {
+    mountNativeElement(virtualDOM, container)
+  }
+}
+
+function buildFunctionComponent(component) {
+  return component.type()
 }
