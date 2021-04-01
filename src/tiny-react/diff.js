@@ -1,3 +1,4 @@
+import createDOMElement from './createDOMElement'
 import mountElement from './mountElement'
 import updateNodeElement from './updateNodeElement'
 import updateTextNode from './updateTextNode'
@@ -9,6 +10,15 @@ export default function diff(virtualDOM, container, oldDOM) {
   // 没有旧节点 => 只用生成 DOM 挂载到 container
   if (!oldDOM) {
     mountElement(virtualDOM, container)
+  }
+
+  // 节点类型不同 => 用新的 VDOM 生成 DOM 换上去即可
+  else if (
+    virtualDOM.type !== oldVirtualDOM.type &&
+    typeof virtualDOM !== 'function'
+  ) {
+    const newElement = createDOMElement(virtualDOM)
+    oldDOM.parentNode.replaceChild(newElement, oldDOM)
   }
 
   // 新旧节点类型相同时

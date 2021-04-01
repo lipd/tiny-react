@@ -24,7 +24,7 @@ const newVirtualDOM = (
     <div className="new-class">
       嵌套1 <div>嵌套 1.1</div>
     </div>
-    <h3>(观察: 这个已经被改变)</h3>
+    <h1>(观察: 这个已经被改变)</h1>
     {2 == 1 && <div>如果2和1相等渲染当前内容</div>}
     {2 == 2 && <div>2</div>}
     <span>这是一段内容</span>
