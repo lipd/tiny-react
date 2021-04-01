@@ -1,4 +1,5 @@
 import mountElement from './mountElement'
+import updateNodeElement from './updateNodeElement'
 import updateTextNode from './updateTextNode'
 
 export default function diff(virtualDOM, container, oldDOM) {
@@ -17,6 +18,7 @@ export default function diff(virtualDOM, container, oldDOM) {
       updateTextNode(virtualDOM, oldVirtualDOM, oldDOM)
     } else {
       // update attribute
+      updateNodeElement(oldDOM, virtualDOM, oldVirtualDOM)
     }
 
     // 递归比较所有子元素
