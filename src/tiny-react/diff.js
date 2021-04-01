@@ -2,6 +2,7 @@ import createDOMElement from './createDOMElement'
 import mountElement from './mountElement'
 import updateNodeElement from './updateNodeElement'
 import updateTextNode from './updateTextNode'
+import unmountNode from './unmountNode'
 
 export default function diff(virtualDOM, container, oldDOM) {
   // 我们希望通过 DOM 的 _virtualDOM 属性访问到它的 VDOM
@@ -35,5 +36,14 @@ export default function diff(virtualDOM, container, oldDOM) {
     virtualDOM.children.forEach((child, i) => {
       diff(child, container, oldDOM.childNodes[i])
     })
+
+    if (oldDOM.childNodes.length > virtualDOM.children.length) {
+      // 数量不同则从后往前删到相同
+      const oldLen = oldDOM.childNodes.length
+      const newLen = virtualDOM.children.length
+      for (let i = oldLen - 1; i > newLen - 1; i--) {
+        unmountNode(oldDOM.childNodes[i])
+      }
+    }
   }
 }

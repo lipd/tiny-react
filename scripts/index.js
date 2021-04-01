@@ -29,7 +29,6 @@ const newVirtualDOM = (
     {2 == 2 && <div>2</div>}
     <span>这是一段内容</span>
     <button onClick={() => alert('你好!!!!')}>点击我</button>
-    <h3>这个将会被删除</h3>
     2, 3
   </div>
 )
