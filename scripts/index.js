@@ -36,21 +36,36 @@ const newVirtualDOM = (
 const Fnc = ({ title }) => <div>{title} Functional Component</div>
 
 class ClassComponent extends TinyReact.Component {
+  state = {
+    title: 'default title',
+  }
+
   constructor(props) {
     super(props)
   }
 
-  render() {
-    const { title } = this.props
+  handleClick = () => {
+    this.setState({
+      title: 'Changed Title',
+    })
+  }
 
-    return <div>{title} Hello React</div>
+  render() {
+    const { title } = this.state
+
+    return (
+      <div>
+        <h1>{title}</h1>
+        <button onClick={this.handleClick}>改变 title</button>
+      </div>
+    )
   }
 }
 
 // TinyReact.render(<Fnc title="Best" />, app)
-// TinyReact.render(<ClassComponent title="Best" />, app)
+TinyReact.render(<ClassComponent title="Best" />, app)
 
-TinyReact.render(virtualDOM, app)
-setTimeout(() => {
-  TinyReact.render(newVirtualDOM, app)
-}, 3000)
+// TinyReact.render(virtualDOM, app)
+// setTimeout(() => {
+//   TinyReact.render(newVirtualDOM, app)
+// }, 3000)

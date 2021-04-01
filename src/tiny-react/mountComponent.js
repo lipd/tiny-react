@@ -35,5 +35,7 @@ function buildFunctionComponent(component) {
 function buildClassComponent(component) {
   const componentClass = component.type
   const instance = new componentClass(component.props || {})
-  return instance.render()
+  const virtualDOM = instance.render()
+  virtualDOM.component = instance
+  return virtualDOM
 }
