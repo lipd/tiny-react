@@ -62,8 +62,21 @@ class ClassComponent extends TinyReact.Component {
   }
 }
 
+class NewClassComponent extends TinyReact.Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+      </div>
+    )
+  }
+}
+
 // TinyReact.render(<Fnc title="Best" />, app)
 TinyReact.render(<ClassComponent title="Best" />, app)
+setTimeout(() => {
+  TinyReact.render(<NewClassComponent title="New" />, app)
+}, 3000)
 
 // TinyReact.render(virtualDOM, app)
 // setTimeout(() => {

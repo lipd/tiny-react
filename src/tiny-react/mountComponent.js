@@ -5,8 +5,9 @@ import mountNativeElement from './mountNativeElement'
 /**
  * @param {Object} component - 被转化为 VDOM 的组件
  * @param {Object} container - 容器
+ * @param {Object} container - 旧元素
  */
-export default function mountComponent(component, container) {
+export default function mountComponent(component, container, oldDOM) {
   let virtualDOM = null
 
   // 生成 VDOM
@@ -20,10 +21,10 @@ export default function mountComponent(component, container) {
 
   // 挂载 VDOM
   if (isComponent(virtualDOM)) {
-    // 如果还是生成的还是组件则向上递归
-    mountComponent(virtualDOM, container)
+    // 如果生成的还是组件则向上递归
+    mountComponent(virtualDOM, container, oldDOM)
   } else {
-    mountNativeElement(virtualDOM, container)
+    mountNativeElement(virtualDOM, container, oldDOM)
   }
 }
 
