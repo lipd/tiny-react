@@ -44,6 +44,33 @@ class ClassComponent extends TinyReact.Component {
     super(props)
   }
 
+  componentWillMount() {}
+
+  componentDidMount() {}
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps')
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate')
+    return true
+  }
+
+  // DOM 没更新，虚拟 DOM 没有渲染出来
+  componentWillUpdate(nextProps, nextState) {
+    console.log('componentWillUpdate')
+  }
+
+  // DOM 已经更新
+  componentDidUpdate(prevProps, preState) {
+    console.log('componentDidUpdate')
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount')
+  }
+
   handleClick = () => {
     this.setState({
       title: 'Changed Title',
@@ -55,7 +82,7 @@ class ClassComponent extends TinyReact.Component {
 
     return (
       <div>
-        <h1>{title}</h1>
+        <h1>{this.props.title}</h1>
         <button onClick={this.handleClick}>改变 title</button>
       </div>
     )
@@ -75,7 +102,7 @@ class NewClassComponent extends TinyReact.Component {
 // TinyReact.render(<Fnc title="Best" />, app)
 TinyReact.render(<ClassComponent title="Best" />, app)
 setTimeout(() => {
-  TinyReact.render(<NewClassComponent title="New" />, app)
+  TinyReact.render(<ClassComponent title="New" />, app)
 }, 3000)
 
 // TinyReact.render(virtualDOM, app)

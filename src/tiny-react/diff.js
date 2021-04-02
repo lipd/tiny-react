@@ -6,7 +6,6 @@ import unmountNode from './unmountNode'
 import diffComponent from './diffComponent'
 
 export default function diff(virtualDOM, container, oldDOM) {
-  console.log(virtualDOM, container, oldDOM)
   // 我们希望通过 DOM 的 _virtualDOM 属性访问到它的 VDOM
   const oldVirtualDOM = oldDOM && oldDOM._virtualDOM
   const oldComponent = oldVirtualDOM && oldVirtualDOM.component

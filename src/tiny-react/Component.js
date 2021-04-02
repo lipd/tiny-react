@@ -22,4 +22,26 @@ export default class Component {
   getDOM() {
     return this._dom
   }
+
+  updateProps(props) {
+    this.props = props
+  }
+
+  componentWillMount() {}
+
+  componentDidMount() {}
+
+  componentWillReceiveProps(nextProps) {}
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps != this.props || nextState != this.state
+  }
+
+  // DOM 没更新，虚拟 DOM 没有渲染出来
+  componentWillUpdate(nextProps, nextState) {}
+
+  // DOM 已经更新
+  componentDidUpdate(prevProps, preState) {}
+
+  componentWillUnmount() {}
 }

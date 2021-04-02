@@ -1,4 +1,5 @@
 import mountElement from './mountElement'
+import updateComponent from './updateComponent'
 
 export default function diffComponent(
   virtualDOM,
@@ -7,7 +8,8 @@ export default function diffComponent(
   container,
 ) {
   if (isSameComponent(virtualDOM, oldComponent)) {
-    // 是同一个组件的情况暂时不处理
+    // 是同一个组件的情况都交给 updateComponent
+    updateComponent(virtualDOM, oldComponent, oldDOM, container)
   } else {
     // 不是同一个组件 => 直接把新元素挂载到容器
 
