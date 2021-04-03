@@ -39,10 +39,50 @@ export default function diff(virtualDOM, container, oldDOM) {
       updateNodeElement(oldDOM, virtualDOM, oldVirtualDOM)
     }
 
-    // 递归比较所有子元素
-    virtualDOM.children.forEach((child, i) => {
-      diff(child, container, oldDOM.childNodes[i])
-    })
+    // 收集所有带 key 属性的元素
+    const keyedElements = {}
+    for (let domElement of oldDOM.childNodes) {
+      if (domElement.nodeType === 1) {
+        const key = domElement.getAttribute('key')
+        if (key) {
+          keyedElements[key] = domElement
+        }
+      }
+    }
+
+    const hasNoKey = Object.keys(keyedElements).length === 0
+
+    // 没有 key => 直接遍历元素进行 diff
+    if (hasNoKey) {
+      // 递归比较所有子元素
+      virtualDOM.children.forEach((child, i) => {
+        diff(child, container, oldDOM.childNodes[i])
+      })
+    }
+    // 有 key => 找到有 key 的元素，能找到就不需要重新渲染
+    else {
+      virtualDOM.children.forEach((child, i) => {
+        const key = child.props.key
+        if (key) {
+          const domElement = keyedElements[key]
+          // 能找到元素，不需要重新渲染
+          if (domElement) {
+            // [1: a, 2: b, 3: c, 4: d] => [2: b, 3: c, 4: d, 1: a]
+            // 1. 我们到位置一获取到 key 值 2
+            // 2. 我们发现这个位置原来的 a 和 key 值对应的 b 不同
+            // 3. 我们把 b 插入到这个位置此时 oldDOM 为 [2: b, 1: a, 3: c, 4: d]
+            // oldDOM.childNodes[i]
+            // 如果遍历的当前元素
+            if (oldDOM.childNodes[i] && oldDOM.childNodes[i] !== domElement) {
+              oldDOM.insertBefore(domElement, oldDOM.childNodes[i])
+            }
+          }
+        }
+        // 找不到，重新渲染
+        else {
+        }
+      })
+    }
 
     if (oldDOM.childNodes.length > virtualDOM.children.length) {
       // 数量不同则从后往前删到相同

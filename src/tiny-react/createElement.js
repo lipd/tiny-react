@@ -1,5 +1,5 @@
 export default function createElement(type, props, ...children) {
-  const childElements = [...children].reduce((accu, child) => {
+  const childElements = [].concat(...children).reduce((accu, child) => {
     if (child === false || child === true || child === null) {
       return accu
     } else if (child instanceof Object) {
