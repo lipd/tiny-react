@@ -9,6 +9,7 @@ import mountNativeElement from './mountNativeElement'
  */
 export default function mountComponent(component, container, oldDOM) {
   let virtualDOM = null
+  let newComponent = null
 
   // 生成 VDOM
   if (isFunctionComponent(component)) {
@@ -17,6 +18,7 @@ export default function mountComponent(component, container, oldDOM) {
   } else {
     // generate class component
     virtualDOM = buildClassComponent(component)
+    component = virtualDOM.component // 只有类组件使用这 ref
   }
 
   // 挂载 VDOM
@@ -25,6 +27,14 @@ export default function mountComponent(component, container, oldDOM) {
     mountComponent(virtualDOM, container, oldDOM)
   } else {
     mountNativeElement(virtualDOM, container, oldDOM)
+  }
+
+  if (newComponent) {
+    // 创建时调用 componentDidMount
+    newComponent.componentDidMount()
+    if (newComponent.props && newComponent.props.ref) {
+      newComponent.props.ref(newComponent)
+    }
   }
 }
 

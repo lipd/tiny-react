@@ -37,16 +37,25 @@ const Fnc = ({ title }) => <div>{title} Functional Component</div>
 
 class ClassComponent extends TinyReact.Component {
   state = {
-    title: 'default title',
+    title: '',
   }
+
+  textInput = null
 
   constructor(props) {
     super(props)
   }
 
+  setTextInputRef = (ref) => {
+    console.log(ref)
+    this.textInput = ref
+  }
+
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
 
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps')
@@ -72,18 +81,18 @@ class ClassComponent extends TinyReact.Component {
   }
 
   handleClick = () => {
-    this.setState({
-      title: 'Changed Title',
-    })
+    if (this.textInput) this.textInput.focus()
   }
 
   render() {
-    const { title } = this.state
-
     return (
       <div>
-        <h1>{this.props.title}</h1>
-        <button onClick={this.handleClick}>改变 title</button>
+        <input
+          type="text"
+          ref={this.setTextInputRef}
+          onInput={this.handleInput}
+        />
+        <button onClick={this.handleClick}>获取焦点</button>
       </div>
     )
   }
@@ -100,10 +109,10 @@ class NewClassComponent extends TinyReact.Component {
 }
 
 // TinyReact.render(<Fnc title="Best" />, app)
-TinyReact.render(<ClassComponent title="Best" />, app)
-setTimeout(() => {
-  TinyReact.render(<ClassComponent title="New" />, app)
-}, 3000)
+TinyReact.render(<ClassComponent />, app)
+// setTimeout(() => {
+//   TinyReact.render(<ClassComponent title="New" />, app)
+// }, 3000)
 
 // TinyReact.render(virtualDOM, app)
 // setTimeout(() => {

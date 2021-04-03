@@ -22,5 +22,10 @@ export default function createDOMElement(virtualDOM) {
     mountElement(child, newElement)
   })
 
+  // 如果用户为 Native Elemnt 设置了 ref 回调函数，则将 DOM 作为参数传递给 ref
+  if (virtualDOM.props && virtualDOM.props.ref) {
+    virtualDOM.props.ref(newElement)
+  }
+
   return newElement
 }
