@@ -85,11 +85,30 @@ export default function diff(virtualDOM, container, oldDOM) {
     }
 
     if (oldDOM.childNodes.length > virtualDOM.children.length) {
-      // 数量不同则从后往前删到相同
       const oldLen = oldDOM.childNodes.length
       const newLen = virtualDOM.children.length
-      for (let i = oldLen - 1; i > newLen - 1; i--) {
-        unmountNode(oldDOM.childNodes[i])
+      if (hasNoKey) {
+        for (let i = oldLen - 1; i > newLen - 1; i--) {
+          // 数量不同则从后往前删到相同
+          unmountNode(oldDOM.childNodes[i])
+        }
+      } else {
+        for (let i = 0; i < oldLen; i++) {
+          const oldChild = oldDOM.childNodes[i]
+          const oldChildKey = oldChild._virtualDOM.props.key
+          let found = false
+          for (let n = 0; n < virtualDOM.children.length; n++) {
+            // 如果找到 key 则不用删
+            if (oldChildKey === virtualDOM.children[n].props.key) {
+              found = true
+              break
+            }
+          }
+          // 没找到的情况才删
+          if (!found) {
+            unmountNode(oldChild)
+          }
+        }
       }
     }
   }
