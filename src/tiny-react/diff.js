@@ -76,10 +76,10 @@ export default function diff(virtualDOM, container, oldDOM) {
             if (oldDOM.childNodes[i] && oldDOM.childNodes[i] !== domElement) {
               oldDOM.insertBefore(domElement, oldDOM.childNodes[i])
             }
+          } else {
+            // 传入当前元素，让新元素挂载到当前元素前面
+            mountElement(child, oldDOM, oldDOM.childNodes[i])
           }
-        }
-        // 找不到，重新渲染
-        else {
         }
       })
     }

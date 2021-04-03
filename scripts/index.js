@@ -81,10 +81,11 @@ class ClassComponent extends TinyReact.Component {
   handleClick = () => {
     this.setState({
       list: [
+        { id: 5, name: 'e' },
         { id: 1, name: 'a' },
         { id: 2, name: 'b' },
-        { id: 4, name: 'd' },
         { id: 3, name: 'c' },
+        { id: 4, name: 'd' },
       ],
     })
   }
@@ -96,8 +97,8 @@ class ClassComponent extends TinyReact.Component {
           {this.state.list.map(({ id, name }) => (
             <li key={id}>{name}</li>
           ))}
-          <button onClick={this.handleClick}>改变状态</button>
         </ul>
+        <button onClick={this.handleClick}>改变状态</button>
       </div>
     )
   }
